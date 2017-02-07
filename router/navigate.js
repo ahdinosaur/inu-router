@@ -6,7 +6,7 @@ module.exports = {
   needs: { router: { set: 'first' } },
   path: ['router', 'navigate'],
   create: (api) => ({
-    run: (model, nextRoute, { models }) => {
+    run: (model, nextRoute) => {
       const nextModel = createLocation(model, nextRoute)
  
       // update url bar if it changed

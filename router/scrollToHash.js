@@ -1,7 +1,7 @@
 module.exports = {
   path: ['router', 'scrollToHash'],
   create: (api) => ({
-    run: (hash, { models }) => {
+    run: (model, hash) => {
       try {
         const el = document.querySelector(hash)
         if (el) el.scrollIntoView(true)

@@ -9,7 +9,7 @@ module.exports = {
   } },
   path: ['router', 'listen'],
   create: (api) => ({
-    run: () => {
+    run: (model) => {
       const effectActions = Pushable(function onClose (error) {
         // TODO cleanup href and history
         console.error(error)
@@ -24,6 +24,9 @@ module.exports = {
       listenHistory(href => {
         effectActions.push(api.router.set(href))
       })
+
+      // call set to populate initial params
+      effectActions.push(api.router.set(model.router.href))
 
       return effectActions
     }
