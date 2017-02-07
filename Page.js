@@ -23,7 +23,9 @@ function PageModule (definition) {
 
 function Route ({ route, view }) {
   return function () {
-    return [route, view]
+    return [route, (params, model, dispatch) => {
+      return view(model, dispatch)
+    }]
   }
 }
 
