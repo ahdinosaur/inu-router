@@ -13,7 +13,12 @@ module.exports = {
     return { inu: { enhancer: inuRouter } }
 
     function viewByRoute (model, dispatch) {
-      return router(model.router.href, model, dispatch)
+      try {
+        return router(model.router.href, model, dispatch)
+      } catch (err) {
+        if (/route '.*?' did not match/.test(err.message)) return
+        else throw err
+      }
     }
 
     function inuRouter (app) {

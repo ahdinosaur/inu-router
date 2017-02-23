@@ -21,7 +21,13 @@ module.exports = {
       scope: ['router'],
       update: (model, nextRoute) => {
         var nextModel = createLocation(model, nextRoute)
-        nextModel.params = router(nextModel.pathname)
+        try {
+          nextModel.params = router(nextModel.pathname)
+        } catch (err) {
+          if (/route '.*?' did not match/.test(err.message))
+            nextModel.params = {}
+          else throw err
+        }
         
         if (nextModel.hash && nextModel.hash !== model.hash)
           var effect = scrollToHash(nextModel.hash)
