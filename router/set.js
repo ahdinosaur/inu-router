@@ -2,6 +2,8 @@ const Router = require('sheet-router')
 const walk = require('sheet-router/walk')
 const createLocation = require('sheet-router/create-location')
 
+const sortRoutes = require('../lib/sortRoutes')
+
 module.exports = {
   needs: {
     inu: { route: 'map' },
@@ -9,7 +11,7 @@ module.exports = {
   },
   path: ['router', 'set'],
   create: (api) => {
-    const routes = api.inu.route()
+    const routes = sortRoutes(api.inu.route())
 
     // HACK to get route params
     var router = Router({ thunk: false }, routes)

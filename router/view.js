@@ -1,11 +1,13 @@
 const assign = require('object-assign')
 const Router = require('sheet-router')
 
+const sortRoutes = require('../lib/sortRoutes')
+
 module.exports = {
   needs: { inu: { route: 'map' } },
   gives: { inu: { enhancer: true } },
   create: (api) => {
-    const routes = api.inu.route()
+    const routes = sortRoutes(api.inu.route())
     const router = Router(routes)
 
     return { inu: { enhancer: inuRouter } }
