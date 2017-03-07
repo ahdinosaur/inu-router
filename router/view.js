@@ -7,12 +7,15 @@ module.exports = {
   needs: { inu: { route: 'map' } },
   gives: { inu: { enhancer: true } },
   create: (api) => {
-    const routes = sortRoutes(api.inu.route())
-    const router = Router(routes)
+    var router
 
     return { inu: { enhancer: inuRouter } }
 
     function viewByRoute (model, dispatch) {
+      if (router === undefined) {
+        const routes = sortRoutes(api.inu.route())
+        router = Router(routes)
+      }
       try {
         return router(model.router.href, model, dispatch)
       } catch (err) {

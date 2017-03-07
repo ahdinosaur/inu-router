@@ -11,15 +11,18 @@ module.exports = {
   },
   path: ['router', 'set'],
   create: (api) => {
-    const routes = sortRoutes(api.inu.route())
-
-    // HACK to get route params
-    var router = Router({ thunk: false }, routes)
-    walk(router, (route, cb) => params => params)
-
+    var router
     return {
       scope: ['router'],
       update: (model, nextRoute) => {
+        if (router === undefined) {
+          const routes = sortRoutes(api.inu.route())
+
+          // HACK to get route params
+          router = Router({ thunk: false }, routes)
+          walk(router, (route, cb) => params => params)
+        }
+
         var nextModel = createLocation(model, nextRoute)
         try {
           nextModel.params = router(nextModel.pathname)
